@@ -1,1 +1,1 @@
-Add all JS libraries to the lib folder
+Add data sources to the data folder

@@ -1,10 +1,19 @@
+/* Stylesheet by Alex Larson, 2023 */
 /*Add CSS styles here*/
-#map {
-    height: 88vh;
-    width: 73%;
-    display: inline-block;
-    margin-right: 10px;
-    border-radius: 15px;
-    z-index: 1;
-    margin-top: 7px;
+
+/*style for title potentially*/
+/*#title {
+    color: darkgreen;
+    font-size: xx-large;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    text-align: center;
+    text-shadow: 1px 1px 5px #fff, 1px 1px 5px #ccc;
+    background-color: sienna;
+    width: 80%;
+    margin: 0 auto;
+    height: 45px;
+}*/
+
+#map { 
+    height: 800px;
 }

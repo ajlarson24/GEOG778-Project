@@ -1,1 +1,1 @@
-Add images to the img folder
+Add data sources to the data folder
