@@ -1,8 +1,8 @@
 /* SHARKVIZ SOURCE CODE */
-//declare map var in global scope
 var map;
-
-//initial popup window
+//-----------------------------------------------------------//
+//====================  POP UP FUNCTION  ====================//
+//-----------------------------------------------------------//
 window.addEventListener("load", function () {
     this.setTimeout(
         function open(event) {
@@ -12,7 +12,6 @@ window.addEventListener("load", function () {
     )
 });
 
-//popup window interactions
 document.querySelector("#close").addEventListener("click", function () {
     document.querySelector(".popup").style.display = "none";
 });
@@ -20,8 +19,9 @@ document.querySelector("#close").addEventListener("click", function () {
 document.querySelector("#letsGo").addEventListener("click", function () {
     document.querySelector(".popup").style.display = "none";
 });
-
-//function to instantiate the Leaflet map
+//-----------------------------------------------------------//
+//==================  CREATE MAP FUNCTION  ==================//
+//-----------------------------------------------------------//
 function createMap(){
     //create the map
     map = L.map('map', {
@@ -37,8 +37,15 @@ function createMap(){
     }).addTo(map);
 
     L.control.zoom({
-        position: 'bottomright'
+        position: 'topright'
     }).addTo(map);
+
+    L.control.scale({
+        maxWidth: 225
+    }).addTo(map);
+
+    L.Control.geocoder().addTo(map);
+
 
     //set map boundaries
     var northW = L.latLng(60, -120);
@@ -55,8 +62,18 @@ function createMap(){
     addSharks(map);
     addBeaches(map);
 };
+//-----------------------------------------------------------//
+//======================  CUSTOM ICONS  =====================//
+//-----------------------------------------------------------//
+var sharkIcon = L.icon({
+    iconUrl: 'https://clipart-library.com/new_gallery/92-922418_png-file-silhouette-of-a-shark.png',
+    iconSize:[20, 20],
+});
 
-//added at Example 2.3 line 20...function to attach popups to each mapped feature
+const basicBeachIcon = L.icon({iconUrl: 'https://raw.githubusercontent.com/shacheeswadia/leaflet-map/main/beach-icon-colorful.svg',
+    iconSize: [20, 20], // size of the icon
+});
+
 function onEachFeature(feature, layer) {
     //no property named popupContent; instead, create html string with all properties
     var popupContent = "";
@@ -68,10 +85,9 @@ function onEachFeature(feature, layer) {
         layer.bindPopup(popupContent);
     };
 };
-
-const basicBeachIcon = L.icon({iconUrl: 'https://raw.githubusercontent.com/shacheeswadia/leaflet-map/main/beach-icon-colorful.svg', iconSize: [25, 25], // size of the icon
-});
-
+//-----------------------------------------------------------//
+//======================  ADDING DATA  ======================//
+//-----------------------------------------------------------//
 function addBeaches(map){
     //load the data
     fetch("data/Beaches.geojson")
@@ -79,19 +95,11 @@ function addBeaches(map){
             return response.json();
         })
         .then(function(json){
-            var geojsonMarkerOptions = {
-                radius: 4,
-                fillColor: "orange",
-                color: "red",
-                weight: 1,
-                opacity: 1,
-                fillOpacity: 1
-            };
             //create a Leaflet GeoJSON layer and add it to the map
             L.geoJson(json, {
                 onEachFeature: onEachFeature,
                 pointToLayer: function (feature, latlng){
-                    return L.circleMarker(latlng, {icon: basicBeachIcon});
+                    return L.marker(latlng, {icon: basicBeachIcon});
                 }
             }).addTo(map);
         })
@@ -105,22 +113,19 @@ function addSharks(map){
             return response.json();
         })
         .then(function(json){
-            var geojsonMarkerOptions = {
-                radius: 2,
-                fillColor: "#56903a",
-                color: "blue",
-                weight: 1,
-                opacity: 1,
-                fillOpacity: 1
-            };
             //create a Leaflet GeoJSON layer and add it to the map
             L.geoJson(json, {
                 onEachFeature: onEachFeature,
                 pointToLayer: function (feature, latlng){
-                    return L.circleMarker(latlng, geojsonMarkerOptions);
+                    return L.circleMarker(latlng, {icon: sharkIcon});
                 }
             }).addTo(map);
         })
 };
 
+
+
+//-----------------------------------------------------------//
+//================  ON WINDOW LOAD FUNCTION  ================//
+//-----------------------------------------------------------//
 document.addEventListener('DOMContentLoaded',createMap)
