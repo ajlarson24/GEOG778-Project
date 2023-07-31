@@ -4,6 +4,7 @@
 
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width">
+        <title>SharkViz</title>
             
         <link rel="stylesheet" href="lib/leaflet/leaflet.css">
 
@@ -11,10 +12,35 @@
         
     </head>
 
-    <body>
+    <body style="background-image: linear-gradient(135deg, #20b2ab, #0d869d, #006993); background-repeat: no-repeat">
+        
+        <div id="title"><img class="fin" src="https://clipart-library.com/new_gallery/186-1861788_vector-sharks-stencil-shark-icon-png.png" height="36"> SharkViz: Shark Finder</div>
+        <div id="myModal">
+            <div class="popup">
+                <button id="close">&times;</button>
+                <h1>Welcome to SharkViz!</h1>
+                <p>
+                    SharkViz is a brand new web map intended to help visualize which beaches may have a higher chance of a shark-human interaction.
+                    This is <b><u>not</u></b> a tool designed to show the most "dangerous" beaches, but rather those
+                    that are potentially more likely for a shark to swim close to, and those that may provide ecological benefits to sharks.
+                    <br>
+        
+                </p>
+                <p>
+                    A megalodon-sized thank you to Chris Fischer, John Tyminski, and the rest of the Ocearch research team for
+                    sharing their
+                    shark data. This project would not have been possible without their help and support.
+                </p>
+                <p>
+                    Explore all of Ocearch's data in their interactive tracker: <a href="https://www.ocearch.org/tracker/"
+                        target="_blank">Ocearch Interactive Map</a>
+                </p>
+                <button id="letsGo">
+                    <e href="#">Dive in!</e>
+                </button>
+            </div>
+        </div>
 
-        <div id="title"></div>
-       
         <div id="map"></div>
         
         <script type="text/javascript" src="lib/leaflet/leaflet.js"></script>

@@ -1,19 +1,131 @@
 /* Stylesheet by Alex Larson, 2023 */
 /*Add CSS styles here*/
 
-/*style for title potentially*/
-/*#title {
-    color: darkgreen;
-    font-size: xx-large;
-    font-family:Verdana, Geneva, Tahoma, sans-serif;
-    text-align: center;
-    text-shadow: 1px 1px 5px #fff, 1px 1px 5px #ccc;
-    background-color: sienna;
-    width: 80%;
-    margin: 0 auto;
-    height: 45px;
-}*/
+.popup {
+    /*background-image: linear-gradient(25deg, #045b8dad, #74a9cfb4, #74a9cfb4, #045b8dad), url('https://img.freepik.com/free-vector/blue-smooth-flowing-dynamic-wave-background_1017-33405.jpg');*/
+    box-shadow: inset 0 0 0 1000px #20b2abe7;
+    background: url(https://static.vecteezy.com/system/resources/previews/009/013/628/original/shark-silhouette-set-of-sharks-collection-of-silhouettes-of-predatory-swimming-marine-fish-free-vector.jpg) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    width: 750px;
+    padding: 30px 40px;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 50%;
+    border-radius: 15px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    display: none;
+    z-index: 10000000;
+    color: #ffffff;
+    text-shadow: 0.75px 0.75px #272727;
+    border-width: 2px;
+    border-style: solid;
+    border-color: #272727;
+}
 
-#map { 
-    height: 800px;
+#letsGo {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: azure;
+}
+
+#close {
+    color: #006993;
+    font-size: 40px;
+}
+
+#close:hover {
+    color: white;
+}
+
+.popup button {
+    display: block;
+    margin: 0 0 20px auto;
+    background-color: transparent;
+    font-size: 30px;
+    color: #c5c5c5;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+.popup p {
+    font-size: 20px;
+    text-align: justify;
+    margin: 20px 0;
+}
+
+e {
+    display: block;
+    width: 150px;
+    position: relative;
+    margin: auto;
+    text-align: center;
+    background-color: #006993;
+    color: white;
+    text-decoration: none;
+    padding: 5px 0;
+    border-radius: 3px;
+}
+
+e:hover {
+    cursor: pointer;
+    box-shadow: inset 1px 1px 1px 1px #b0d8f0;
+    background-color: #74a9cf;
+    color: #045a8d;
+    text-shadow: .75px .75px #3f3f3fa4
+}
+
+a:link{
+    color:#006993;
+  }
+  a:visited{
+    color:#006993;
+  }
+  a:hover{
+    color:skyblue;
+  }
+  a:focus{
+    color:#006993;
+  }
+  a:active{
+    color:white;
+  }
+
+#myModal{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    z-index: 1000;
+}
+
+#map {
+    height: 88vh;
+    width: 99%;
+    display: inline-block;
+    margin-right: 10px;
+    border-radius: 15px;
+    z-index: 1;
+    margin-top: 7px;
+    margin-right: 5px;
+    margin-left: 5px;
+    border-width: 2px;
+    border-style: solid;
+    border-color: #272727;
+}
+
+#title{
+    color: white;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 45px;
+    font-weight: 800;
+    margin-right: 5px;
+    text-align: center;
+}
+
+#fin{
+    
 }
