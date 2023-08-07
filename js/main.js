@@ -73,13 +73,14 @@ function createMap(){
 
 	info.update = function (props) {
 		this._div.innerHTML = '<h4>SharkViz Beach Information</h4>' +  (props ?
-			'<b>' + props.name + '</b><br />' + props.density + ' people / mi<sup>2</sup>' : 'Hover over a beach');
+			'<b>' + props.name + '</b><br />' + props.density + ' people / mi<sup>2</sup>' 
+            : 'Hover over a beach');
 	};
 
 	info.addTo(map);
 
     //call getData function
-    addBeaches(map);
+    //addBeaches(map);
     getData(map);
 };
 
@@ -110,13 +111,13 @@ function addBeaches(map){
         .then(function(json){
             //create a Leaflet GeoJSON layer and add it to the map
             L.geoJson(json, {
-                onEachFeature: onEachFeature,
-                highlightFeature: highlightFeature,
                 pointToLayer: function (feature, latlng){
                     return L.marker(latlng, {icon: basicBeachIcon});
-                }
+                },
+                onEachFeature: onEachFeature,
             }).addTo(map);
         })
+    
 }
 
 var options = {
@@ -213,6 +214,7 @@ function checkboxes(map) {
 //================  INTERACTIONS WITH DATA  =================//
 //-----------------------------------------------------------//
 
+//on mouse over
 function highlightFeature(e) {
     var layer = e.target;
 
@@ -226,12 +228,18 @@ function highlightFeature(e) {
     if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
         layer.bringToFront();
     }
+    info.update(layer.feature.properties);
 }
 
+var geojson;
+
+//on mouse out
 function resetHighlight(e) {
     geojson.resetStyle(e.target);
+    info.update();
 }
 
+//on mouse click
 function zoomToFeature(e) {
     map.fitBounds(e.target.getBounds());
 }
