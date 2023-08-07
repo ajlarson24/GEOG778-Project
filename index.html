@@ -16,7 +16,8 @@
 
     <body style="background-image: linear-gradient(135deg, #20b2ab, #0d869d, #006993); background-repeat: no-repeat">
         
-        <div id="title"><img class="fin" src="https://clipart-library.com/new_gallery/186-1861788_vector-sharks-stencil-shark-icon-png.png" height="36"> SharkViz: Shark Finder</div>
+        <div id="title"><img class="fin" src="https://clipart-library.com/new_gallery/186-1861788_vector-sharks-stencil-shark-icon-png.png" height="36"> <b>SharkViz:</b> <i>Shark Finder</i></div>
+        
         <div id="myModal">
             <div class="popup">
                 <button id="close">&times;</button>
@@ -24,14 +25,16 @@
                 <p>
                     SharkViz is a brand new web map intended to help visualize which beaches may have a higher chance of a shark-human interaction.
                     This is <b><u>not</u></b> a tool designed to show the most "dangerous" beaches, but rather those
-                    that are potentially more likely for a shark to swim close to, and those that may provide ecological benefits to sharks.
+                    that are potentially more likely for a shark to swim close to, and those that may provide ecological benefits to sharks. Although there are over
+                    500 species of sharks, this project focuses mainly on Great White sharks, which were tagged in the Atlantic Ocean near the East Coast
+                    of the United States.
                     <br>
         
                 </p>
                 <p>
                     A megalodon-sized thank you to Chris Fischer, John Tyminski, and the rest of the Ocearch research team for
-                    sharing their
-                    shark data. This project would not have been possible without their help and support.
+                    sharing their shark data. This project would not have been possible without their help and support.
+                    One more thank you to the 25 sharks that provided their journeys to me. Just keep swimming!
                 </p>
                 <p>
                     Explore all of Ocearch's data in their interactive tracker: <a href="https://www.ocearch.org/tracker/"
@@ -41,6 +44,23 @@
                     <e href="#">Dive in!</e>
                 </button>
             </div>
+        </div>
+
+        <div id="left-panel">
+            <form id="form">
+                <h3
+                    style="margin-top: 0px; margin-left: 0px; color: azure; padding-top: 10px; font-size: xx-large; font-family:  'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
+                    <u><b>Interactive Layers</b></u>
+                </h3>
+                <div id="checkBox">    
+                    <p><label class="container"
+                            style="color: azure; padding-top: 5px; font-size: x-large; font-family:  'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
+                            Shark Pings
+                            <input id='sharksbox' class="checkbox" name="category" value="sharks" type="checkbox">
+                            <span class="checkmark" style="margin-top: 10px;"></span>
+                        </label></p>
+                </div>
+            </form>
         </div>
 
         <div id="map"></div>

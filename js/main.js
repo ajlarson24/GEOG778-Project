@@ -1,8 +1,10 @@
 /* SHARKVIZ SOURCE CODE */
 var map;
+
 //-----------------------------------------------------------//
 //====================  POP UP FUNCTION  ====================//
 //-----------------------------------------------------------//
+
 window.addEventListener("load", function () {
     this.setTimeout(
         function open(event) {
@@ -19,9 +21,11 @@ document.querySelector("#close").addEventListener("click", function () {
 document.querySelector("#letsGo").addEventListener("click", function () {
     document.querySelector(".popup").style.display = "none";
 });
+
 //-----------------------------------------------------------//
 //==================  CREATE MAP FUNCTION  ==================//
 //-----------------------------------------------------------//
+
 function createMap(){
     //create the map
     map = L.map('map', {
@@ -41,11 +45,12 @@ function createMap(){
     }).addTo(map);
 
     L.control.scale({
-        maxWidth: 225
+        maxWidth: 225,
+        position: 'bottomright',
+
     }).addTo(map);
 
     L.Control.geocoder().addTo(map);
-
 
     //set map boundaries
     var northW = L.latLng(60, -120);
@@ -58,36 +63,44 @@ function createMap(){
         });
     });
 
+	var info = L.control();
+
+	info.onAdd = function (map) {
+		this._div = L.DomUtil.create('div', 'info');
+		this.update();
+		return this._div;
+	};
+
+	info.update = function (props) {
+		this._div.innerHTML = '<h4>SharkViz Beach Information</h4>' +  (props ?
+			'<b>' + props.name + '</b><br />' + props.density + ' people / mi<sup>2</sup>' : 'Hover over a beach');
+	};
+
+	info.addTo(map);
+
     //call getData function
-    addSharks(map);
     addBeaches(map);
+    getData(map);
 };
+
 //-----------------------------------------------------------//
 //======================  CUSTOM ICONS  =====================//
 //-----------------------------------------------------------//
+
 var sharkIcon = L.icon({
     iconUrl: 'https://clipart-library.com/new_gallery/92-922418_png-file-silhouette-of-a-shark.png',
     iconSize:[20, 20],
 });
 
-const basicBeachIcon = L.icon({iconUrl: 'https://raw.githubusercontent.com/shacheeswadia/leaflet-map/main/beach-icon-colorful.svg',
-    iconSize: [20, 20], // size of the icon
+var basicBeachIcon = L.icon({
+    iconUrl: 'https://raw.githubusercontent.com/shacheeswadia/leaflet-map/main/beach-icon-colorful.svg',
+    iconSize: [20, 20],
 });
 
-function onEachFeature(feature, layer) {
-    //no property named popupContent; instead, create html string with all properties
-    var popupContent = "";
-    if (feature.properties) {
-        //loop to add feature property names and values to html string
-        for (var property in feature.properties){
-            popupContent += "<p>" + property + ": " + feature.properties[property] + "</p>";
-        }
-        layer.bindPopup(popupContent);
-    };
-};
 //-----------------------------------------------------------//
 //======================  ADDING DATA  ======================//
 //-----------------------------------------------------------//
+
 function addBeaches(map){
     //load the data
     fetch("data/Beaches.geojson")
@@ -98,34 +111,141 @@ function addBeaches(map){
             //create a Leaflet GeoJSON layer and add it to the map
             L.geoJson(json, {
                 onEachFeature: onEachFeature,
+                highlightFeature: highlightFeature,
                 pointToLayer: function (feature, latlng){
                     return L.marker(latlng, {icon: basicBeachIcon});
                 }
             }).addTo(map);
         })
-};
+}
+
+var options = {
+    fillcolor: "#20b2ab",
+    color: "#006993",
+    weight: 1,
+    opacity: 1,
+    radius: 3,}
 
 
-function addSharks(map){
-    //load the data
+function getData(map){
     fetch("data/Sharks.geojson")
         .then(function(response){
             return response.json();
         })
         .then(function(json){
-            //create a Leaflet GeoJSON layer and add it to the map
-            L.geoJson(json, {
-                onEachFeature: onEachFeature,
-                pointToLayer: function (feature, latlng){
-                    return L.circleMarker(latlng, {icon: sharkIcon});
+            sharks = new L.geoJson(json,{
+                style: function (feature) {
+                    return {
+                        classname: 'sharksclass'
+                    }
                 }
-            }).addTo(map);
+            });
         })
-};
+    };
+
+// =========================== BACK UP ===========================//
+
+    /*function addBeaches(map){
+        //load the data
+        fetch("data/Beaches.geojson")
+            .then(function(response){
+                return response.json();
+            })
+            .then(function(json){
+                //create a Leaflet GeoJSON layer and add it to the map
+                L.geoJson(json, {
+                    onEachFeature: onEachFeature,
+                    pointToLayer: function (feature, latlng){
+                        return L.marker(latlng, {icon: basicBeachIcon});
+                    }
+                }).addTo(map);
+            })
+    };
+    
+    var options = {
+        fillcolor: "#20b2ab",
+        color: "#006993",
+        weight: 1,
+        opacity: 1,
+        radius: 3,
+    }
+    
+    function addSharks(map){
+        //load the data
+        fetch("data/Sharks.geojson")
+            .then(function(response){
+                return response.json();
+            })
+            .then(function(json){
+                //create a Leaflet GeoJSON layer and add it to the map
+                L.geoJson(json, {
+                    onEachFeature: onEachFeature,
+                    pointToLayer: function (feature, latlng){
+                        return L.circleMarker(latlng, options, {icon: sharkIcon});
+                    }
+                }).addTo(map);
+            })*/
 
 
+//-----------------------------------------------------------//
+//=====================  CHECKBOX DATA  =====================//
+//-----------------------------------------------------------//
+
+function checkboxes(map) {
+    document.querySelectorAll(".checkbox").forEach(function (box) {
+        box.addEventListener("change", function () {
+            if (box.checked) {
+                if (box.value == "sharks") {
+                    sharks.addTo(map);
+                    beaches.bringToFront();
+                }
+            }
+            else {
+                if (box.value == "sharks") {
+                    map.removeLayer(sharks);
+                }
+            }
+        })
+    })
+}
+
+//-----------------------------------------------------------//
+//================  INTERACTIONS WITH DATA  =================//
+//-----------------------------------------------------------//
+
+function highlightFeature(e) {
+    var layer = e.target;
+
+    layer.setStyle({
+        weight: 5,
+        color: '#666',
+        dashArray: '',
+        fillOpacity: 0.7
+    });
+
+    if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+        layer.bringToFront();
+    }
+}
+
+function resetHighlight(e) {
+    geojson.resetStyle(e.target);
+}
+
+function zoomToFeature(e) {
+    map.fitBounds(e.target.getBounds());
+}
+
+function onEachFeature(feature, layer) {
+    layer.on({
+        mouseover: highlightFeature,
+        mouseout: resetHighlight,
+        click: zoomToFeature
+    });
+}
 
 //-----------------------------------------------------------//
 //================  ON WINDOW LOAD FUNCTION  ================//
 //-----------------------------------------------------------//
+
 document.addEventListener('DOMContentLoaded',createMap)
