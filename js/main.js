@@ -41,7 +41,7 @@ function createMap(){
     }).addTo(map);
 
     L.control.zoom({
-        position: 'topright'
+        position: 'topleft'
     }).addTo(map);
 
     L.control.scale({
@@ -50,7 +50,7 @@ function createMap(){
 
     }).addTo(map);
 
-    L.Control.geocoder().addTo(map);
+    L.Control.geocoder({position: 'topleft'}).addTo(map);
 
     //set map boundaries
     var northW = L.latLng(60, -120);
