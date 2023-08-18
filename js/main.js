@@ -63,24 +63,6 @@ function createMap(){
         });
     });
 
-	/*var info = L.control();
-
-	info.onAdd = function (map) {
-		this._div = L.DomUtil.create('div', 'info');
-		this.update();
-		return this._div;
-	};
-
-	info.update = function (props) {
-		this._div.innerHTML = '<h4>SharkViz Beach Information</h4>' +  (props ?
-			'<b>' + props.name + '</b><br />' + props.density + ' people / mi<sup>2</sup>' 
-            : 'Hover over a beach');
-	};
-
-	info.addTo(map);*/
-
-    //call getData function
-    //addBeaches(map);
     getData(map);
     checkboxes(map);
 };
@@ -103,24 +85,7 @@ var basicBeachIcon = L.icon({
 //======================  ADDING DATA  ======================//
 //-----------------------------------------------------------//
 
-/*function addBeaches(map) {
-    //load the data
-    fetch("data/Beaches.geojson")
-        .then(function (response) {
-            return response.json();
-        })
-        .then(function (json) {
-            //create a Leaflet GeoJSON layer and add it to the map
-            beaches = new L.geoJson(json, {
-                pointToLayer: function (feature, latlng) {
-                    return L.marker(latlng, { icon: basicBeachIcon });
-                },
-                onEachFeature: onEachFeature,
-            }).addTo(map);
-        })
-
-}*/
-
+//======================  Shark Symbols  ======================//
 var options = {
     fillcolor: "#20b2ab",
     color: "#006993",
@@ -129,15 +94,13 @@ var options = {
     radius: 3,
 }
 
-
+//======================  Loading Data  ======================//
 function getData(map) {
-    //sharks data
     fetch("data/BeachesNew.geojson")
         .then(function (response) {
             return response.json();
         })
         .then(function (json) {
-            //create a Leaflet GeoJSON layer and add it to the map
             beaches = new L.geoJson(json, {
                 pointToLayer: function (feature, latlng) {
                     return L.marker(latlng, { icon: basicBeachIcon });
@@ -213,7 +176,7 @@ function getData(map) {
             })
         })
 
-    //create huc info popup and set update parameters for hover interaction
+//======================  Creating Info Box  ======================//        
     const info = L.control({ position: 'bottomleft' });
 
     info.onAdd = function (map) {
@@ -234,9 +197,7 @@ function getData(map) {
 
     info.addTo(map)
 
-    //================================================================================================================
-    //highlight, dehighlight, and zoom to feature
-
+//======================  Data Interactions  ======================//    
     //hover function for beaches/info
     function hover(e) {
         const layer = e.target;
