@@ -1,6 +1,13 @@
 /* Stylesheet by Alex Larson, 2023 */
 /*Add CSS styles here*/
 
+*:before,
+*:after {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
 .popup {
     /*background-image: linear-gradient(25deg, #045b8dad, #74a9cfb4, #74a9cfb4, #045b8dad), url('https://img.freepik.com/free-vector/blue-smooth-flowing-dynamic-wave-background_1017-33405.jpg');*/
     box-shadow: inset 0 0 0 1000px #20b2abe7;
@@ -128,30 +135,27 @@ a:link{
 }
 
 .info {
-    padding: 6px 15px;
-    font: 14px/16px;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    padding: 6px 8px;
+    font: 14px/16px Verdana, Geneva, Tahoma, sans-serif;
     background: white;
-    background: rgba(255, 255, 255, 0.8);
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    background: rgba(255,255,255,0.8);
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
     border-radius: 5px;
-    width: fit-content;
-    height: 170px;
-    bottom: 40px;
-    left: 35px;
 }
 
 .info h4 {
-    margin: 0 0 5px;
+    margin: 0 0 6px;
     color: #777;
-    font-size: x-large;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
-.info h6 {
-    font-size: 14pt;
+.info h5 {
+    font-size: 12pt;
     color: #777;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    line-height: 15pt;
+    margin-top: 5pt;
+    margin-bottom: 3pt;
 }
 
 #left-panel {
@@ -200,7 +204,7 @@ a:link{
     width: fit-content;
     height: fit-content;
     position: fixed;
-    bottom: 50px;
+    bottom: 70px;
 }
 
 .info h4 {
@@ -215,3 +219,4 @@ a:link{
     color: #777;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
+

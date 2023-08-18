@@ -14,7 +14,7 @@
         
     </head>
 
-    <body style="background-image: linear-gradient(135deg, #20b2ab, #0d869d, #006993); background-repeat: no-repeat">
+    <body style="background-image: linear-gradient(135deg, #20b2abcc, #0d859da4, #006993a9), url('https://previews.123rf.com/images/winnond/winnond1109/winnond110900016/10610404-reflection-and-blue-clear-ocean-water.jpg'); background-size: cover">
         
         <div id="title"><img class="fin" src="https://clipart-library.com/new_gallery/186-1861788_vector-sharks-stencil-shark-icon-png.png" height="36"> <b>SharkViz:</b> <i>Shark Finder</i></div>
         
@@ -37,6 +37,9 @@
                     One more thank you to the 25 sharks that provided their journeys to me. Just keep swimming!
                 </p>
                 <p>
+                    Shark points collected and updated on July 6<sup>th</sup>, 2023.
+                </p>
+                <p>
                     Explore all of Ocearch's data in their interactive tracker: <a href="https://www.ocearch.org/tracker/"
                         target="_blank">Ocearch Interactive Map</a>
                 </p>
@@ -48,15 +51,44 @@
 
         <div id="left-panel">
             <form id="form">
+
                 <h3
                     style="margin-top: 0px; margin-left: 0px; color: azure; padding-top: 10px; font-size: xx-large; font-family:  'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
                     <u><b>Interactive Layers</b></u>
                 </h3>
+
                 <div id="checkBox">    
                     <p><label class="container"
                             style="color: azure; padding-top: 5px; font-size: x-large; font-family:  'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
                             Shark Pings
                             <input id='sharksbox' class="checkbox" name="category" value="sharks" type="checkbox">
+                            <span class="checkmark" style="margin-top: 10px;"></span>
+                        </label></p>
+                </div>
+
+                <div id="checkBox">    
+                    <p><label class="container"
+                            style="color: azure; padding-top: 5px; font-size: x-large; font-family:  'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
+                            10 Mile Radius
+                            <input id='10mibox' class="checkbox" name="category" value="buff10" type="checkbox">
+                            <span class="checkmark" style="margin-top: 10px;"></span>
+                        </label></p>
+                </div>
+
+                <div id="checkBox">    
+                    <p><label class="container"
+                            style="color: azure; padding-top: 5px; font-size: x-large; font-family:  'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
+                            20 Mile Radius
+                            <input id='20mibox' class="checkbox" name="category" value="buff20" type="checkbox">
+                            <span class="checkmark" style="margin-top: 10px;"></span>
+                        </label></p>
+                </div>
+
+                <div id="checkBox">    
+                    <p><label class="container"
+                            style="color: azure; padding-top: 5px; font-size: x-large; font-family:  'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
+                            30 Mile Radius
+                            <input id='30mibox' class="checkbox" name="category" value="buff30" type="checkbox">
                             <span class="checkmark" style="margin-top: 10px;"></span>
                         </label></p>
                 </div>

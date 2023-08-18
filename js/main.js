@@ -63,7 +63,7 @@ function createMap(){
         });
     });
 
-	var info = L.control();
+	/*var info = L.control();
 
 	info.onAdd = function (map) {
 		this._div = L.DomUtil.create('div', 'info');
@@ -77,11 +77,12 @@ function createMap(){
             : 'Hover over a beach');
 	};
 
-	info.addTo(map);
+	info.addTo(map);*/
 
     //call getData function
     //addBeaches(map);
     getData(map);
+    checkboxes(map);
 };
 
 //-----------------------------------------------------------//
@@ -102,92 +103,171 @@ var basicBeachIcon = L.icon({
 //======================  ADDING DATA  ======================//
 //-----------------------------------------------------------//
 
-function addBeaches(map){
+/*function addBeaches(map) {
     //load the data
     fetch("data/Beaches.geojson")
-        .then(function(response){
+        .then(function (response) {
             return response.json();
         })
-        .then(function(json){
+        .then(function (json) {
             //create a Leaflet GeoJSON layer and add it to the map
-            L.geoJson(json, {
-                pointToLayer: function (feature, latlng){
-                    return L.marker(latlng, {icon: basicBeachIcon});
+            beaches = new L.geoJson(json, {
+                pointToLayer: function (feature, latlng) {
+                    return L.marker(latlng, { icon: basicBeachIcon });
                 },
                 onEachFeature: onEachFeature,
             }).addTo(map);
         })
-    
-}
+
+}*/
 
 var options = {
     fillcolor: "#20b2ab",
     color: "#006993",
     weight: 1,
     opacity: 1,
-    radius: 3,}
+    radius: 3,
+}
 
 
-function getData(map){
-    fetch("data/Sharks.geojson")
-        .then(function(response){
+function getData(map) {
+    //sharks data
+    fetch("data/BeachesNew.geojson")
+        .then(function (response) {
             return response.json();
         })
-        .then(function(json){
-            sharks = new L.geoJson(json,{
+        .then(function (json) {
+            //create a Leaflet GeoJSON layer and add it to the map
+            beaches = new L.geoJson(json, {
+                pointToLayer: function (feature, latlng) {
+                    return L.marker(latlng, { icon: basicBeachIcon });
+                },
+                onEachFeature: onEachBeach,
+            }).addTo(map);
+        })
+
+    fetch("data/SharksNew.geojson")
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (json) {
+            sharks = new L.geoJson(json, {
+                pointToLayer: function (feature, latlng) {
+                    return L.circleMarker(latlng, options, { icon: sharkIcon });
+                },
+                onEachFeature: sharkPopup,
+            })
+        })
+
+    fetch("data/10miBuffs.geojson")
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (json) {
+            buff10 = new L.geoJson(json, {
                 style: function (feature) {
                     return {
-                        classname: 'sharksclass'
+                        fillcolor: "none",
+                        color: "#edf8b1",
+                        weight: 4,
+                        opacity: .9,
+                        fillOpacity: .04,
                     }
                 }
-            });
+            })
         })
-    };
 
-// =========================== BACK UP ===========================//
-
-    /*function addBeaches(map){
-        //load the data
-        fetch("data/Beaches.geojson")
-            .then(function(response){
-                return response.json();
-            })
-            .then(function(json){
-                //create a Leaflet GeoJSON layer and add it to the map
-                L.geoJson(json, {
-                    onEachFeature: onEachFeature,
-                    pointToLayer: function (feature, latlng){
-                        return L.marker(latlng, {icon: basicBeachIcon});
+    fetch("data/20miBuffs.geojson")
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (json) {
+            buff20 = new L.geoJson(json, {
+                style: function (feature) {
+                    return {
+                        fillcolor: "none",
+                        color: "#7fcdbb",
+                        weight: 4,
+                        opacity: .8,
+                        fillOpacity: .03,
                     }
-                }).addTo(map);
+                }
             })
+        })
+
+    fetch("data/30miBuffs.geojson")
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (json) {
+            buff30 = new L.geoJson(json, {
+                style: function (feature) {
+                    return {
+                        fillcolor: "none",
+                        color: "#2c7fb8",
+                        weight: 4,
+                        opacity: .7,
+                        fillOpacity: .02,
+                    }
+                }
+            })
+        })
+
+    //create huc info popup and set update parameters for hover interaction
+    const info = L.control({ position: 'bottomleft' });
+
+    info.onAdd = function (map) {
+        this._div = L.DomUtil.create('div', 'info');
+        this.update();
+        return this._div;
     };
-    
-    var options = {
-        fillcolor: "#20b2ab",
-        color: "#006993",
-        weight: 1,
-        opacity: 1,
-        radius: 3,
+
+    info.update = function (props) {
+        const contents = props ? `<h5><span style="color:#3b3b3b">Beach Name:</span> ${props.Beach_Name}
+                    <br/><span style="color:#3b3b3b">State: </span>${props.State}
+                    <br/><span style="color:#3b3b3b">Sharks within 10 Miles: </span>${props.Sharks10}
+                    <br/><span style="color:#3b3b3b">Within 20 Miles: </span>${props.Sharks20}
+                    <br/><span style="color:#3b3b3b">Within 30 Miles: </span>${props.Sharks30}`
+            : 'Hover over a Beach</h5>';
+        this._div.innerHTML = `<h4>SharkViz Beach Information</h4>${contents}`;
+    };
+
+    info.addTo(map)
+
+    //================================================================================================================
+    //highlight, dehighlight, and zoom to feature
+
+    //hover function for beaches/info
+    function hover(e) {
+        const layer = e.target;
+        info.update(layer.feature.properties);
     }
+
+    //function to reset info to initial parameters
+    function mouseout(e) {
+        info.update();
+    }
+
+    function onEachBeach(feature, layer) {
+        layer.on({
+            mouseover: hover,
+            mouseout: mouseout,
+        });
+    }
+
+    function sharkPopup(feature, layer) {
+        //no property named popupContent; instead, create html string with all properties
+        var popupContent = "";
+        if (feature.properties) {
+            //loop to add feature property names and values to html string
+            for (var property in feature.properties){
+                popupContent += "<p>" + property + ": " + feature.properties[property] + "</p>";
+            }
+            layer.bindPopup(popupContent);
+        };
+    };
+}
     
-    function addSharks(map){
-        //load the data
-        fetch("data/Sharks.geojson")
-            .then(function(response){
-                return response.json();
-            })
-            .then(function(json){
-                //create a Leaflet GeoJSON layer and add it to the map
-                L.geoJson(json, {
-                    onEachFeature: onEachFeature,
-                    pointToLayer: function (feature, latlng){
-                        return L.circleMarker(latlng, options, {icon: sharkIcon});
-                    }
-                }).addTo(map);
-            })*/
-
-
 //-----------------------------------------------------------//
 //=====================  CHECKBOX DATA  =====================//
 //-----------------------------------------------------------//
@@ -198,58 +278,43 @@ function checkboxes(map) {
             if (box.checked) {
                 if (box.value == "sharks") {
                     sharks.addTo(map);
-                    beaches.bringToFront();
+                    sharks.bringToFront();
+                }
+                if (box.value == "buff10") {
+                    buff10.addTo(map);
+                    buff10.bringToFront();
+                    sharks.bringToFront();
+                }
+                if (box.value == "buff20") {
+                    buff20.addTo(map);
+                    buff20.bringToFront();
+                    buff10.bringToFront();
+                    sharks.bringToFront();
+                }
+                if (box.value == "buff30") {
+                    buff30.addTo(map);
+                    buff30.bringToFront();
+                    buff20.bringToFront();
+                    buff10.bringToFront();
+                    sharks.bringToFront();
                 }
             }
             else {
                 if (box.value == "sharks") {
                     map.removeLayer(sharks);
                 }
+                if (box.value == "buff10") {
+                    map.removeLayer(buff10);
+                }
+                if (box.value == "buff20") {
+                    map.removeLayer(buff20);
+                }
+                if (box.value == "buff30") {
+                    map.removeLayer(buff30);
+                }
             }
         })
     })
-}
-
-//-----------------------------------------------------------//
-//================  INTERACTIONS WITH DATA  =================//
-//-----------------------------------------------------------//
-
-//on mouse over
-function highlightFeature(e) {
-    var layer = e.target;
-
-    layer.setStyle({
-        weight: 5,
-        color: '#666',
-        dashArray: '',
-        fillOpacity: 0.7
-    });
-
-    if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
-        layer.bringToFront();
-    }
-    info.update(layer.feature.properties);
-}
-
-var geojson;
-
-//on mouse out
-function resetHighlight(e) {
-    geojson.resetStyle(e.target);
-    info.update();
-}
-
-//on mouse click
-function zoomToFeature(e) {
-    map.fitBounds(e.target.getBounds());
-}
-
-function onEachFeature(feature, layer) {
-    layer.on({
-        mouseover: highlightFeature,
-        mouseout: resetHighlight,
-        click: zoomToFeature
-    });
 }
 
 //-----------------------------------------------------------//
