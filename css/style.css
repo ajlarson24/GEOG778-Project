@@ -149,11 +149,12 @@ a:link{
     margin: 0 0 6px;
     color: #006993;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-size: 15pt;
+    font-size: 20pt;
+    margin-bottom: 8px;
 }
 
 .info h5 {
-    font-size: 12pt;
+    font-size: 15pt;
     color: #0d859d;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     line-height: 15pt;

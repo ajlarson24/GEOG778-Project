@@ -131,9 +131,9 @@ function getData(map) {
                 style: function (feature) {
                     return {
                         fillcolor: "none",
-                        color: "#edf8b1",
+                        color: "#2b8cbe",
                         weight: 4,
-                        opacity: .9,
+                        opacity: .7,
                         fillOpacity: .04,
                     }
                 }
@@ -149,9 +149,9 @@ function getData(map) {
                 style: function (feature) {
                     return {
                         fillcolor: "none",
-                        color: "#7fcdbb",
+                        color: "#a6bddb",
                         weight: 4,
-                        opacity: .8,
+                        opacity: .9,
                         fillOpacity: .03,
                     }
                 }
@@ -167,9 +167,9 @@ function getData(map) {
                 style: function (feature) {
                     return {
                         fillcolor: "none",
-                        color: "#2c7fb8",
+                        color: "#ece7f2",
                         weight: 4,
-                        opacity: .7,
+                        opacity: .9,
                         fillOpacity: .02,
                     }
                 }
